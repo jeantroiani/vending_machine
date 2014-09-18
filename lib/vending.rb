@@ -9,14 +9,14 @@ class Vending
 		@products = []
 		
 		@cash = { 
-			two_pounds: 10,
-			pound: 10,
-			fifty_pence: 10,
-			twenty_pence: 10,
-		  ten_pence: 10,
-			five_pence: 10,
-			two_pence: 10,
-			pence: 10
+			two_pounds:   10,
+			pound:        10,
+			fifty_pence:  10,
+			twenty_pence: 10, 
+		  ten_pence:    10,
+			five_pence:   10,
+			two_pence:    10,
+			pence:        10
 			}
 
 	  @denomination =[	
@@ -28,7 +28,7 @@ class Vending
 			@five_pence   = 0.05,
 			@two_pence    = 0.02,
 			@pence        = 0.01,
-		]
+		  ]
 	end
 
 	def load(item)
@@ -97,7 +97,9 @@ class Vending
 	end
 
 	def cash_available
-		self.cash.values.inject {|sum,ele| sum + ele }
+		@each_of_updated = []
+		self.cash.values.each_with_index{|amount, index| @each_of_updated <<  amount * @denomination[index]}
+		@each_of_updated.inject{|sum,el| sum +el}.round(2)
 	end
 
 end

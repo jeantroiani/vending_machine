@@ -71,9 +71,8 @@ describe Vending do
 		it 'tracks cash that has available' do
 			machine.insert(2, :pound)
 			machine.insert(2, :pence)
-			expect(machine.cash_available).to eq(2.2)
+			expect(machine.cash_available).to eq(40.82)
 		end
-
 	end
 
 end

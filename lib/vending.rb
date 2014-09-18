@@ -8,25 +8,27 @@ class Vending
 	def initialize
 		@products = []
 		
-		@cash = { two_pounds: 0,
-					 	 pound: 0,
-					 	 fifty_pence: 0,
-					   twenty_pence: 0,
-					   ten_pence: 0,
-					   five_pence: 0,
-					   two_pence: 0,
-					   pence: 0
-					 }
-	
-		@pence        = 0.01
-		@two_pence    = 0.02
-		@five_pence   = 0.05
-		@ten_pence    = 0.10
-		@twenty_pence = 0.20
-		@fifty_pence  = 0.50
-		@pound        = 1.0
-		@two_pounds   = 2.0
-	
+		@cash = { 
+			two_pounds: 0,
+			pound: 0,
+			fifty_pence: 0,
+			twenty_pence: 0,
+		  ten_pence: 0,
+			five_pence: 0,
+			two_pence: 0,
+			pence: 0
+			}
+
+	  @denomination =[	
+			@two_pounds   = 2.0,
+			@pound        = 1.0,
+			@fifty_pence  = 0.50,
+			@twenty_pence = 0.20,
+			@ten_pence    = 0.10,
+			@five_pence   = 0.05,
+			@two_pence    = 0.02,
+			@pence        = 0.01,
+		]
 	end
 
 	def load(item)
@@ -45,110 +47,53 @@ class Vending
 		cash[money_type]-= amount 
 	end
 
-	def buy(item,amount_inserted,money_type)
+	def buy(item, amount_inserted)
 		if item.price < amount_inserted
 			release(item)
-			give_back(amount_result,money_type)
+			payment(amount_inserted)
+			change(difference(item.price,amount_inserted))
 		else
 			puts 'Not enough money, try again'
 		end
 	end
 
-	def difference(cost,amount)
-		cost < amount ? (amount-cost).round(2):nil 
+	def difference(cost, amount_inserted)
+		cost < amount_inserted ? (amount_inserted-cost).round(2):nil 
 	end
 
-	def two_pounds_change(amount)
-		if amount >= @two_pounds && cash[:two_pounds] > 0
-			two_pounds_change = (amount / @two_pounds).floor
-			amount -= two_pounds_change * @two_pounds
-			@amount = amount.round(2)
-			@cash[:two_pounds] -= two_pounds_change
-			puts "you will receive #{two_pounds_change} two pounds coins"
-		end
+	def total_message(update)
+		@message = ""
+		print @message << update+"\n"
 	end
-
-	def one_pound_change(amount)
-		if amount >= @pound && amount > 0 && cash[:pound] > 0
-			one_pound_change = (amount / @pound).floor 
-			amount -= (one_pound_change * @pound).round(2)
-			@amount = amount.round(2)
-			@cash[:pound]-= one_pound_change
-			puts "you will receive #{one_pound_change} one pound coins"
-		end
-	end
-
-	def fifty_pence_change(amount)
-		if amount >= @fifty_pence && amount != 0 && cash[:fifty_pence] > 0
-			fifty_pence_change = (amount / @fifty_pence).floor
-			amount -= (fifty_pence_change * @fifty_pence).round(2)
-			@amount = amount.round(2)
-			@cash[:fifty_pence]-= fifty_pence_change
-			puts "you will receive #{fifty_pence_change} fifty pence coins"
-		end
-	end
-
-	def twenty_pence_change(amount)
-		if amount >= @twenty_pence && amount != 0 && cash[:twenty_pence] > 0
-			twenty_pence_change = (amount / @twenty_pence).floor
-			amount -= (twenty_pence_change * @twenty_pence).round(2)
-			@amount = amount.round(2)
-			@cash[:twenty_pence]-= twenty_pence_change
-			puts "you will receive #{twenty_pence_change} twenty pence coins"
-		end
-	end
-
-	def ten_pence_change(amount)
-		if amount >= @ten_pence && amount != 0 && cash[:ten_pence] > 0
-			ten_pence_change = (amount / @ten_pence).floor
-			amount -= (ten_pence_change * @ten_pence).round(2)
-			@amount = amount.round(2)
-			@cash[:ten_pence]-= ten_pence_change
-			puts "you will receive #{ten_pence_change} ten pence coins"
-		end
-	end
-
-	def five_pence_change(amount)
-		if amount >= @five_pence && amount != 0 && cash[:five_pence] > 0
-			five_pence_change = (amount / @five_pence).floor
-			amount -= (five_pence_change * @five_pence).round(2)
-			@amount = amount.round(2)
-			@cash[:five_pence]-= five_pence_change
-			puts "you will receive #{five_pence_change} five pence coins"
-		end
-	end
-
-	def two_pence_change(amount)
-		if amount >= @two_pence && amount != 0 && cash[:two_pence] > 0
-			two_pence_change = (amount / @two_pence).floor
-			amount -= (two_pence_change * @two_pence).round(2)
-			@amount = amount.round(2)
-			@cash[:two_pence]-= two_pence_change
-			puts "you will receive #{two_pence_change} two pence coins"
-		end
-	end
-
-	def pence_change(amount)
-			if amount >= @pence && amount != 0 && cash[:pence] > 0
-			pence_change = (amount / @pence).floor
-			amount -= (pence_change * @pence).round(2)
-			@amount = amount.round(2)
-			@cash[:pence]-= pence_change
-			puts "you will receive #{pence_change} pence coins"
-		end
-	end
-
-
+	
 	def change(amount)
 		@amount = amount
-		two_pounds_change(@amount)
-		one_pound_change(@amount)
-		fifty_pence_change(@amount)
-		twenty_pence_change(@amount)
-		ten_pence_change(@amount)
-		fifty_pence_change(@amount)
-		two_pence_change(@amount)
-		pence_change(@amount)
+		@cash.keys.each_with_index {|key,index| change_sort(@amount, @denomination[index], key)}
+		@total_message
 	end
 
+	def change_sort(amount, currency, cash_type)
+		if amount >= currency && amount > 0 && cash[cash_type] > 0
+			current_currency_total = (amount / currency).floor
+			amount -= current_currency_total * currency
+			@amount = amount.round(2)
+			@cash[cash_type] -= current_currency_total
+			total_message("you received back #{current_currency_total} of #{currency}")
+		end
+	end
+
+	def payment(amount)
+		@amount = amount
+		@cash.keys.each_with_index {|key,index| payment_sort(@amount, @denomination[index], key)}
+	end
+
+	def payment_sort(amount, currency, cash_type)
+		if amount >= currency && amount > 0
+			current_currency_total = (amount / currency).floor
+			amount -= current_currency_total * currency
+			@amount = amount.round(2)
+			@cash[cash_type] += current_currency_total
+		end
+	end
+	
 end

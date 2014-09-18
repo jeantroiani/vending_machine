@@ -1,9 +1,11 @@
 class Product
 
 	attr_accessor :price
+	attr_reader   :name
 
-	def initialize(price={})
-		@price = price.fetch(:price, 1.00) 
+	def initialize(name, price = 1)
+		@price = price 
+		@name  = name
 	end
 
 end

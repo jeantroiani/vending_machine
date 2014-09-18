@@ -9,14 +9,14 @@ class Vending
 		@products = []
 		
 		@cash = { 
-			two_pounds: 0,
-			pound: 0,
-			fifty_pence: 0,
-			twenty_pence: 0,
-		  ten_pence: 0,
-			five_pence: 0,
-			two_pence: 0,
-			pence: 0
+			two_pounds: 10,
+			pound: 10,
+			fifty_pence: 10,
+			twenty_pence: 10,
+		  ten_pence: 10,
+			five_pence: 10,
+			two_pence: 10,
+			pence: 10
 			}
 
 	  @denomination =[	
@@ -95,5 +95,9 @@ class Vending
 			@cash[cash_type] += current_currency_total
 		end
 	end
-	
+
+	def cash_available
+		self.cash.values.inject{|sum,ele| sum + ele }
+	end
+
 end

@@ -2,15 +2,20 @@ require 'product.rb'
 
 	describe Product do
 	
-		let(:coke) {Product.new(price: 10)}
+		let(:soda) {Product.new("soda",10)}
 		
 		it 'has a price' do
-			expect(coke.price).to eq(10)
+			expect(soda.price).to eq(10)
 		end
 
 		it 'has a default price' do
-			pepsi = Product.new
-			expect(pepsi.price).to eq(1)
+			cake = Product.new ("cake")
+			expect(cake.price).to eq(1)
+		end
+
+			it 'has a name' do
+			cake = Product.new ("cake")
+			expect(cake.name).to eq("cake")
 		end
 
 		

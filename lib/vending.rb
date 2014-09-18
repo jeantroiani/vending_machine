@@ -97,7 +97,7 @@ class Vending
 	end
 
 	def cash_available
-		self.cash.values.inject{|sum,ele| sum + ele }
+		self.cash.values.inject {|sum,ele| sum + ele }
 	end
 
 end

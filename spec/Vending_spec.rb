@@ -34,7 +34,7 @@ describe Vending do
 			expect(machine.cash[:pound]).to eq(13)
 		end
 
-		it 'can load 1 pence' do
+		it 'can receive 1 pence' do
 			machine.insert(1, :pence)
 			expect(machine.cash[:pence]).to eq(11)
 		end
@@ -60,9 +60,23 @@ describe Vending do
 			expect(machine.difference(cost,amount)).to eq(0.01)
 		end
 
+		it 'sorts change' do
+			machine.change(3.5)
+			expect(machine.cash[:two_pounds]).to eq(9)
+			expect(machine.cash[:pound]).to eq(9)
+			expect(machine.cash[:fifty_pence]).to eq(9)
+		end
+
+		it 'sorts payment' do
+			machine.payment(2.21)
+			expect(machine.cash[:two_pounds]).to eq(11)
+			expect(machine.cash[:twenty_pence]).to eq(11)
+			expect(machine.cash[:pence]).to eq(11)
+		end  
+
 		it 'tracks product that has available' do
 			cake = double :cake, price: 0.99
-			pie= double :pie , price: 1.55
+			pie = double :pie , price: 1.55
 			machine.load(cake)
 			machine.load(pie)
 			expect(machine.products.size).to eq(2)

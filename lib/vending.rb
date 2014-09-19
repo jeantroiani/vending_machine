@@ -65,7 +65,6 @@ class Vending
 	def change(amount)
 		@amount = amount
 		@cash.keys.each_with_index {|key,index| change_sort(@amount, @denomination[index], key)}
-		@total_message
 	end
 
 	def payment(amount)

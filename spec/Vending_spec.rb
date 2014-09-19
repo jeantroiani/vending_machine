@@ -49,8 +49,8 @@ describe Vending do
 			cake = double :cake, price: 0.99
 			machine.load(cake)
 			machine.buy(cake, 1)
-			expect(machine.products).to eq([])
 			expect(machine.cash[:pound]).to eq(11)
+			expect(machine.products).to eq([])
 			expect(machine.cash[:pence]).to eq(9)
 		end
 

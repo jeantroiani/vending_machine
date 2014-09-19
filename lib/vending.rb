@@ -81,7 +81,6 @@ class Vending
 	def payment_sort(amount, currency, cash_type)
 			sorting(amount, currency, cash_type)
 			@cash[cash_type] += @current_currency_total
-		
 	end
 
 	def sorting(amount, currency, cash_type)

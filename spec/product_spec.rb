@@ -18,5 +18,4 @@ require 'product.rb'
 			expect(cake.name).to eq("cake")
 		end
 
-		
 	end

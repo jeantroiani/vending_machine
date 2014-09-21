@@ -3,8 +3,8 @@ require 'cash'
 	describe Cash do
 
 		context 'can' do
-
-			let (:cash) {Cash.new}
+			let (:currency) {Currency.new}
+			let (:cash) 		{Cash.new(currency)}
 
 			it 'receive money' do
 				cash.insert(1 , :pound)
@@ -20,7 +20,7 @@ require 'cash'
 			it 'tells the cash available' do
 				cash.insert(2 , :two_pounds)
 				cash.insert(1, :fifty_pence)
-				expect(cash.money_available).to eq(2.50)
+				expect(cash.value_iteration_with_index).to eq(2.50)
 			end
 
 		end

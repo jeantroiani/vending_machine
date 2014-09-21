@@ -20,7 +20,7 @@ require 'cash'
 			it 'tells the cash available' do
 				cash.insert(2 , :two_pounds)
 				cash.insert(1, :fifty_pence)
-				expect(cash.value_iteration_with_index).to eq(2.50)
+				expect(cash.money_available).to eq(4.50)
 			end
 
 		end

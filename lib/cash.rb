@@ -17,34 +17,24 @@ class Cash
 		}
 	end
 
-	def insert(amount, money_type)
-		coin_container[money_type]+= amount 
+	def insert(amount, grade)
+		coin_container[grade]+= amount 
 	end
 
-	def release(amount, money_type)
-		coin_container[money_type]-= amount 
+	def release(amount, grade)
+		coin_container[grade]-= amount 
 	end
 
-	def value_iteration_with_index
-		coin_container.values.each_with_index {|amount, index| money_available(amount, index)} 
-	end
-
-	def money_available(amount, grade)
-		reduce_money(currency.unit_conversion(amount, grade))
+	def iteration
+		coin_container.each_pair.map {|grade, amount| currency.unit_conversion(amount, grade)} 
 	end
 
 	def reduce_money(collection)
-		@collection ||=[]
-		@collection << collection 
 		collection.inject{|sum,el| sum + el}
+	end
+
+	def money_available
+		reduce_money(iteration)
 	end
 	
 end
-
-
-
-	# def money_available
-	# 	# @each_of_updated = []
-	# 	self.cash.values.each_with_index{|amount, index| @each_of_updated <<  amount * @denomination[index]}
-	# 	reduce_money(collection)
-	# end

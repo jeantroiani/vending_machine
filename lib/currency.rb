@@ -21,8 +21,9 @@ class Currency
 		denomination[name]
 	end
 	
+	
 	def unit_conversion (amount, grade)
-		amount * grade
+		amount * grade(grade)
 	end
 
 end

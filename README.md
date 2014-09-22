@@ -34,7 +34,7 @@ How to setup and run it
     machine.products.load(cake)  (loads item into the machine)
     machine.buy(cake,2, :pound) (Buy a cake or anything other product and amount inserted)
         If you haven't inserted all the money required to buy an item, you will be asked to keep
-        introducing money, please use the correct format (1,two_pounds)
+        introducing money, please use the correct format (1 two_pounds)
     machine.products.items  (To see what items are available)
     machine.cash.insert(1,:pound)  (To load the machine with more money)
     

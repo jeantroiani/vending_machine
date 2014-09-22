@@ -14,16 +14,15 @@ class Currency
 			two_pence:     0.02,
 			pence:         0.01,
 		  }
-
 	end
 
 	def grade(name)
 		denomination[name]
 	end
+
 	
-	
-	def unit_conversion (amount, grade)
-		amount * grade(grade)
+	def unit_conversion (amount, size)
+		amount * grade(size)
 	end
 
 end

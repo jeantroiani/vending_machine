@@ -26,16 +26,21 @@ How to setup and run it
     bundle install
     pry (or IRB)
     require './lib/vending.rb'
-    machine = Vending.new (Creates a vending machine and deploys it with ten units of each coin type)
     cake = Product.new(:cake,1.55)  (To create products with a name and price)
-    machine.load(cake)  (Loads item into the machine)
-    machine.buy(cake,2) (Buy a cake or anything other product and amount inserted)
-    machine.products (To see what items are available)
-    machine.insert   (To load the machine with more money)
+    currency = Currency.new (Creates a currency system, in this case UK version)
+    cash = Cash.new(currency) (To add a cash container with the currency of your preference)
+    products = Container.new (To create a box of items to sell)
+    machine = Vending.new(cash: cash, products: products) (To deploy a vending machine)
+    machine.products.load(cake)  (loads item into the machine)
+    machine.buy(cake,2, :pound) (Buy a cake or anything other product and amount inserted)
+        If you haven't insert all the money required to buy an item, you will be asked to keep
+        introducing money, please use the correct format (1,two_pounds)
+    machine.products.items  (To see what items are available)
+    machine.cash.insert(1,:pound)  (To load the machine with more money)
     
 How to test it
 ----------------
-
+    git@github.com:jeantroiani/vending_machine.git
     cd vending_machine
     rspec
 

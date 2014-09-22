@@ -30,6 +30,14 @@ require 'container'
 				expect(container.items).to eq([])
 			end
 
+			it 'tracks product that has available' do
+				cake = double :cake, price: 0.99
+				pie = double :pie , price: 1.55
+				container.load(cake)
+				container.load(pie)
+				expect(container.items.size).to eq(2)
+			end
+
 		end
 
 	end

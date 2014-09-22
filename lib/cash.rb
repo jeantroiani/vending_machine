@@ -12,7 +12,7 @@ class Cash
 			pound:        5,
 			fifty_pence:  5,
 			twenty_pence: 5, 
-		  ten_pence:    5,
+		        ten_pence:    5,
 			five_pence:   5,
 			two_pence:    5,
 			pence:        5

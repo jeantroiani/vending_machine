@@ -15,21 +15,34 @@ class Vending
 
 	end
 
-	def buy(item, amount , size ) 
-		cash.insert(amount, size)
-		amount_inserted = cash.currency.unit_conversion(amount, size)
-		while amount_inserted < item.price
-			puts "please insert more e.g.(1 pound)"
-			amount_update = gets.chomp.split(" ") 
-			amount_inserted += cash.currency.unit_conversion(amount_update[0].to_i,amount_update[1].to_sym	)
-			cash.insert(amount_update[0].to_i, amount_update[1].to_sym)
-		end
-		products.release(item)
-		cash.give_change(difference(item.price, amount_inserted ))
-	end
-
 	def difference(cost, amount_inserted)
 		(amount_inserted-cost).round(2)
+	end
+
+	def buy(item, amount, size )
+		amount_to_deposit(amount, size)
+		enough_cash?(item, @amount_inserted)
+		products.release(item)
+		cash.give_change(difference(item.price, @amount_inserted ))
+	end
+
+	def enough_cash?(item, amount)
+		amount < item.price
+		ask_for_more(item)
+	end
+
+	def ask_for_more(item)
+			while @amount_inserted < item.price
+			puts "please insert more e.g.(1 pound)"
+			amount_update = gets.chomp.split(" ") 
+			amount_to_deposit( cash.currency.unit_conversion(amount_update[0].to_i,amount_update[1].to_sym))
+			end
+	end
+
+	def amount_to_deposit(amount, size)
+		cash.insert(amount, size)
+		@amount_inserted  = 0 
+		@amount_inserted += cash.currency.unit_conversion(amount, size)
 	end
 
 end
